@@ -13,15 +13,34 @@ app.get("/message", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-// Route to get all posts
+//-------------------     Product API   ------------------------------------------------------------------
+
 app.get("/api/get", (req,res)=>{
-  db.query("SELECT * FROM router_demo", (err,result)=>{
+  db.query("SELECT * FROM product", (err,result)=>{
       if(err) {
       console.log(err)
       } 
   res.send(result)
   });   });
   
+//-------------------     Categories API   ------------------------------------------------------------------
+app.get("/api/categories/get", (req,res)=>{
+    db.query("SELECT * FROM product_category", (err,result)=>{
+        if(err) {
+        console.log(err)
+        } 
+    res.send(result)
+    });
+   });
+   //---------------------------------------------------------
+
+
+
+
+
+
+
+
   // Route to get one post
   app.get("/api/getFromId/:id", (req,res)=>{
   
@@ -72,3 +91,6 @@ app.get("/api/get", (req,res)=>{
   app.listen(PORT, ()=>{
       console.log(`Server is running on ${PORT}`)
   })
+
+  //////////////////////////////////////           CATEGORY API         //////////////////////////////////////////////
+  

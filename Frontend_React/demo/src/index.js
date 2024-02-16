@@ -1,7 +1,14 @@
+
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import  Root , {loader as rootLoader, action as rootAction} from "./routes/root";
+import  Root , {loader as rootLoader} from "./routes/root";
 import Contact,  { loader as contactLoader} from "./routes/contact";
 import ErrorPage from "./pages/error-page";
 
@@ -14,10 +21,11 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
-    action: rootAction,
+    //action: rootAction,
     children: [
       {
-        path: "contacts/:contactId",
+        index:true,
+        // path: "contacts/:contactId",
         element: <Contact />,
         loader: contactLoader
       },

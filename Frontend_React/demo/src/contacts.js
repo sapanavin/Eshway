@@ -4,23 +4,34 @@ import sortBy from "sort-by";
 import Axios from 'axios'
 
 
+const config = {
+  method: 'get',
+  url: 'http://localhost:3002/api/get' ,
+  headers: {
+         'Accept': 'application/json'
+  }
+}
+
+
 export async function getContacts() {
   var contacts;
- var contacts1 =
-  await Axios.get("http://localhost:3002/api/get")
-  .then((response)=>{
-       contacts = JSON.stringify(response.data);
+ var contacts1 =  await Axios(config )
+            .then((response)=>{
+            console.log(`Type Of Response : ${typeof(response)}`)
+       //contacts = JSON.stringify(response.data);
+contacts = response.data;
+       //contacts = JSON.parse(response)
         console.log(response.data);
-        console.log(response.status);
-        console.log(response.statusText);
-        console.log(response.headers);
-        console.log(`contacts : ${response.data[0].first_name}`)
-        console.log(`contacts : ${contacts}`)
+       // console.log(response.status);
+        //console.log(response.statusText);
+        //console.log(response.headers);
+        //console.log(`contacts : ${response.data[0].first_name}`)
+        //console.log(`contacts : ${contacts}`)
 
   }, (error) =>{
     console.log(error);
   });
-  console.log(`From Outside contacts : ${contacts}`)
+  //console.log(`From Outside contacts : ${contacts}`)
 return contacts;
 }
 
@@ -38,14 +49,34 @@ return contacts;
 // }
 
 export async function createContact() {
-  await fakeNetwork();
-  let id = Math.random().toString(36).substring(2, 9);
-  let contact = { id, createdAt: Date.now() };
-  let contacts = await getContacts();
-  contacts.unshift(contact);
-  await set(contacts);
-  return contact;
+  var contacts;
+  var contacts1 =
+   await Axios.get("http://localhost:3002/api/create")
+   .then((response)=>{
+        contacts = JSON.stringify(response.data);
+         console.log(response.data);
+         console.log(response.status);
+         console.log(response.statusText);
+         console.log(response.headers);
+         console.log(`contacts : ${response.data[0].first_name}`)
+         console.log(`contacts : ${contacts}`)
+ 
+   }, (error) =>{
+     console.log(error);
+   });
+   console.log(`From Outside contacts : ${contacts}`)
+ return contacts;
+
 }
+// export async function createContact() {
+//   await fakeNetwork();
+//   let id = Math.random().toString(36).substring(2, 9);
+//   let contact = { id, createdAt: Date.now() };
+//   let contacts = await getContacts();
+//   contacts.unshift(contact);
+//   await set(contacts);
+//   return contact;
+// }
 
 export async function getContact(id) {
   await fakeNetwork(`contact:${id}`);

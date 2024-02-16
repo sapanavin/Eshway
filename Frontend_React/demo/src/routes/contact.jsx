@@ -1,94 +1,29 @@
 import { Form, useLoaderData } from "react-router-dom";
-import { getContact } from "../contacts";
+import { getProducts } from "../Api/productapi";
 
-export async function loader({ params }) {
-  const contact = await getContact(params.contactId);
-  return { contact };
+
+
+export async function loader() {
+
+  const contact = await getProducts();
+ 
+  return contact ;
 }
-// Axios.get("http://localhost:3002/api/get").then((response)=>{
-    
 
-//     setPostList(response.data);
-
-//     console.log(response.data);
-//     console.log(response.status);
-//     console.log(response.statusText);
-//     console.log(response.headers);
-//     console.log(response.config);
-    
-// });
 
 
 export default function Contact() {
-  const  contact  = useLoaderData();
-  console.log(`contact  ${ contact }`)
+  var  products  =  useLoaderData();
+ 
+const updatedNums = products.map((p)=>{
+    return <li key={p.id} >{p.id} {p.name}</li>;
+});
 
-  // const contact_temp= {
-  //   first: "Your",
-  //   last: "Name",
-  //   avatar: "https://placekitten.com/g/200/200",
-  //   twitter: "your_handle",
-  //   notes: "Some notes",
-  //   favorite: true,
-  // };
-
-  return (
-    <div id="contact">
-      <div>
-        <img
-          key={contact.avatar}
-          src={contact.avatar || null}
-        />
-      </div>
-
-      <div>
-        <h1>
-          {contact.first || contact.last ? (
-            <>
-              {contact.first} {contact.last}
-            </>
-          ) : (
-            <i>No Name</i>
-          )}{" "}
-          <Favorite contact={contact} />
-        </h1>
-
-        {contact.twitter && (
-          <p>
-            <a
-              target="_blank"
-              href={`https://twitter.com/${contact.twitter}`}
-            >
-              {contact.twitter}
-            </a>
-          </p>
-        )}
-
-        {contact.notes && <p>{contact.notes}</p>}
-
-        <div>
-          <Form action="edit">
-            <button type="submit">Edit</button>
-          </Form>
-          <Form
-            method="post"
-            action="destroy"
-            onSubmit={(event) => {
-              if (
-                !window.confirm(
-                  "Please confirm you want to delete this record."
-                )
-              ) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
-          </Form>
-        </div>
-      </div>
-    </div>
-  );
+return(
+    <div>
+    {/* {updatedNums} */}
+</div>
+  )
 }
 
 function Favorite({ contact }) {
