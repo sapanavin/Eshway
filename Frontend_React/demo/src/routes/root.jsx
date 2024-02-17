@@ -2,7 +2,7 @@ import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
 
 import { getCategories  } from "../Api/category";
 import CustomHeader  from "../components/header";
-import DataGridDemo  from "../components/dataGrid";
+import DataGridDemo  from "../components/footer";
 
 export async function loader() {
 

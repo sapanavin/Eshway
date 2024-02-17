@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,8 +16,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import DataGridDemo from './dataGrid';
+import DataGridDemo from './footer';
 import CustomSideBar from './sidebar';
+import CustomFooter from './footer'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -155,17 +157,28 @@ export default function CustomHeader() {
       </MenuItem>
     </Menu>
   );
-
+    
+  //var sidebarToggle= false;
+  const [sidebarToggle, setsidebarToggle] = useState(true);
+  function handleClick() {
+      setsidebarToggle(a => a=!a);
+  }
+ useEffect( () => {
+    console.log(`from useEffect : ----->${sidebarToggle} `)
+}, [sidebarToggle]);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
+
+          onClick={handleClick}
+          disabled = {sidebarToggle}
+
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            disabled="false"
             sx={{ mr: 2 }}
           >
             <MenuIcon />
@@ -231,7 +244,8 @@ export default function CustomHeader() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <CustomSideBar />
+      <CustomSideBar display = {setsidebarToggle} />
+      <CustomFooter />
       
    
     </Box>
