@@ -1,4 +1,4 @@
-
+ 
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -11,9 +11,10 @@ import './index.css';
 import  Root , {loader as rootLoader} from "./routes/root";
 import Contact,  { loader as contactLoader} from "./routes/contact";
 import ErrorPage from "./pages/error-page";
+import DefaultPage, {loader as defaultLoader}  from './components/defaultpage';
 
 import {  createBrowserRouter,  RouterProvider} from "react-router-dom";
-
+import AddToCart from './components/addtocart';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +25,17 @@ const router = createBrowserRouter([
     //action: rootAction,
     children: [
       {
-        index:true,
+         index:true,
         // path: "contacts/:contactId",
-        element: <Contact />,
-        loader: contactLoader
+        element: <DefaultPage />,
+        loader: defaultLoader
       },
+      {
+        
+       path: "addtocart/:pId",
+       element: <AddToCart />,
+       
+     },
     ],
   },
   

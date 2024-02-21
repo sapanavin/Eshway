@@ -12,6 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import LoginIcon from '@mui/icons-material/Login';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -19,6 +21,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import DataGridDemo from './footer';
 import CustomSideBar from './sidebar';
 import CustomFooter from './footer'
+import { Outlet } from 'react-router-dom';
+import CartStatus from './cartstatus';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -158,23 +162,26 @@ export default function CustomHeader() {
     </Menu>
   );
     
-  //var sidebarToggle= false;
-  const [sidebarToggle, setsidebarToggle] = useState(true);
-  function handleClick() {
-      setsidebarToggle(a => a=!a);
-  }
- useEffect( () => {
-    console.log(`from useEffect : ----->${sidebarToggle} `)
-}, [sidebarToggle]);
+ 
+  const [isDark, setIsDark] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+ 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchInput(e.target.value);
+  };
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
-
-          onClick={handleClick}
-          disabled = {sidebarToggle}
-
+          mychecked={isDark.toString()}
+          onClickCapture={(e) => {console.log(`Initial :  ${isDark}`)
+                          if(e.currentTarget.mychecked === 'true'){ setIsDark(false)}
+                            else { setIsDark(true)}
+                            console.log(isDark)
+                          }}
             size="large"
             edge="start"
             color="inherit"
@@ -183,39 +190,49 @@ export default function CustomHeader() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
+          <br />
+      <label>
+        <input
+          type="checkbox"
+          checked={isDark}
+          onChange={e =>{
+            console.log(`Initial :  ${isDark}`)
+            setIsDark(e.target.checked)
+            console.log(isDark)}
+
+          } 
+        />
+        Dark mode
+      </label>
+      <hr />
+         
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ 'aria-label': 'search'}}
+              onChange={handleChange}
+              value={searchInput}
             />
           </Search>
+          {searchInput}
+          
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+         
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
               <Badge badgeContent={10} color="error">
-                <NotificationsIcon />
+              <ShoppingCartIcon />
               </Badge>
             </IconButton>
+            <CartStatus />
             <IconButton
               size="large"
               edge="end"
@@ -228,6 +245,10 @@ export default function CustomHeader() {
               <AccountCircle />
             </IconButton>
           </Box>
+
+
+
+
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -244,8 +265,10 @@ export default function CustomHeader() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <CustomSideBar display = {setsidebarToggle} />
+      <CustomSideBar theme={isDark ? 'dark' : 'light'} />
+    
       <CustomFooter />
+    
       
    
     </Box>

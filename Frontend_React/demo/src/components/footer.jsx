@@ -17,6 +17,7 @@ export default function CustomFooter() {
 
 
   return (
+    <div className="footer">
     <Box sx={{ width: '100%'}}>
       <BottomNavigation
       sx={{backgroundColor:'info.main', mr: 'inherit', color:'white' }}
@@ -33,5 +34,6 @@ export default function CustomFooter() {
         <BottomNavigationAction sx={{  color:'white' }} label="Nearby Shops" icon={<LocationOnIcon />} />
       </BottomNavigation>
     </Box>
+    </div>
   );
 }

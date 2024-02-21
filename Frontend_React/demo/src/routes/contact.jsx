@@ -5,9 +5,9 @@ import { getProducts } from "../Api/productapi";
 
 export async function loader() {
 
-  const contact = await getProducts();
+  const products = await getProducts();
  
-  return contact ;
+  return products ;
 }
 
 

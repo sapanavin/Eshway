@@ -40,9 +40,6 @@ return (
 
        
        
-        <div>
-           <Outlet />
-        </div>
 
         
       </>

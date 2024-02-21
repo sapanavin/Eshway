@@ -389,3 +389,103 @@ i {
   height: 100%;
   width: 100%;
 }
+
+.sidebar {
+  width: 22rem;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
+  display: flex;
+  flex-direction: column;
+}
+
+.dark {
+    
+  visibility:hidden;
+}
+
+.light {
+
+
+visibility:visible;
+}
+/* .sidebar {
+  width: 15%; height: 85vh;top: 0px;
+      position:relative; max-width: 360;
+ 
+  border:10px;
+  background-color: grey;
+  color: rgb(194, 56, 56);
+} */
+
+
+
+
+.container {
+ 
+  display: flex;
+  min-height:86vh;
+  height: auto;
+  flex: 2 1 auto;
+}
+
+/* .container > * {
+  border: 1px solid green; 
+} */
+.customsidebar{
+  display: flex;
+  flex-direction: column;
+  background-color: aqua;
+
+  min-width: 200px;
+  
+}
+.defaultoutlet{
+  display: flex;
+  flex-direction: column;
+ 
+ 
+}
+.productdisplay
+{
+  display: flex;
+  
+  flex-direction:row;
+  flex-wrap: wrap;
+  padding: 10px;
+
+  
+}
+/* ******************  Cart Status Styles     **************************************/
+
+.cart-area.d-n{
+  display:block
+}
+
+.cart-area i{
+  font-size:22px;
+  float:left;
+  margin-top:16px;
+  color:#fff;
+  margin-left:15px
+}
+
+.total{
+  background:#205b8d;
+  line-height:43px;
+  color:#fff;
+  border-radius:30px;
+  border:1px solid #0da8e4;
+  float:left;
+  margin-top:7px;
+  padding-left:17px
+}
+
+.total span{
+  display:inline-block;
+  background:#fff;
+  padding:0 13px;
+  color:#000;
+  border-top-right-radius:20px;
+  border-bottom-right-radius:20px;
+  margin-left:11px
+}
