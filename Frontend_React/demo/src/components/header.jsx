@@ -265,7 +265,8 @@ export default function CustomHeader() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <CustomSideBar theme={isDark ? 'dark' : 'light'} />
+
+      <CustomSideBar  theme={isDark ? 'dark' : 'light'} />
     
       <CustomFooter />
     

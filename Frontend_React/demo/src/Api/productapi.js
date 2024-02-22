@@ -6,7 +6,7 @@ export async function getProducts() {
     
     var contacts;
     var contacts1 =
-     await Axios.get("http://localhost:3002/api/get")
+     await Axios.get("http://localhost:3002/api/products/get")
      .then((response)=>{
           contacts = response.data;
           // console.log(response.data);

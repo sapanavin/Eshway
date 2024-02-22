@@ -434,9 +434,9 @@ visibility:visible;
 .customsidebar{
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  background-color: rgb(118, 188, 220); 
 
-  min-width: 200px;
+  min-width: 150px;
   
 }
 .defaultoutlet{

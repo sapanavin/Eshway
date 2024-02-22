@@ -12,7 +12,7 @@ app.use(express.json());
 
 //-------------------     Product API   ------------------------------------------------------------------
 
-app.get("/api/get", (req,res)=>{
+app.get("/api/products/get", (req,res)=>{
   db.query("SELECT * FROM product", (err,result)=>{
       if(err) {
       console.log(err)
@@ -29,6 +29,18 @@ app.get("/api/categories/get", (req,res)=>{
     res.send(result)
     });
    });
+              //   ---------------------------
+   app.get("/api/categories/:id", (req,res)=>{
+  
+    const id = req.params.id;
+    console.log(id);
+     db.query("SELECT * FROM product WHERE category_id = ?", id, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        } 
+        res.send(result)
+        });   });
    //---------------------------------------------------------------------------------------------------------------
 
 
@@ -38,56 +50,56 @@ app.get("/api/categories/get", (req,res)=>{
 
 
 
-  // Route to get one post
-  app.get("/api/getFromId/:id", (req,res)=>{
+//   // Route to get one post
+//   app.get("/api/getFromId/:id", (req,res)=>{
   
-  const id = req.params.id;
-   db.query("SELECT * FROM router_demo WHERE id = ?", id, 
-   (err,result)=>{
-      if(err) {
-      console.log(err)
-      } 
-      res.send(result)
-      });   });
+//   const id = req.params.id;
+//    db.query("SELECT * FROM router_demo WHERE id = ?", id, 
+//    (err,result)=>{
+//       if(err) {
+//       console.log(err)
+//       } 
+//       res.send(result)
+//       });   });
   
-  // Route for creating the post
-  app.post('/api/create', (req,res)=> {
+//   // Route for creating the post
+//   app.post('/api/create', (req,res)=> {
   
-  const username = req.body.userName;
-  const title = req.body.title;
-  const text = req.body.text;
+//   const username = req.body.userName;
+//   const title = req.body.title;
+//   const text = req.body.text;
   
-  db.query("INSERT INTO router_demo (title, post_text, user_name) VALUES (?,?,?)",[title,text,username], (err,result)=>{
-     if(err) {
-     console.log(err)
-     } 
-     console.log(result)
-  });   })
+//   db.query("INSERT INTO router_demo (title, post_text, user_name) VALUES (?,?,?)",[title,text,username], (err,result)=>{
+//      if(err) {
+//      console.log(err)
+//      } 
+//      console.log(result)
+//   });   })
   
-  // Route to like a post
-  app.post('/api/like/:id',(req,res)=>{
+//   // Route to like a post
+//   app.post('/api/like/:id',(req,res)=>{
   
-  const id = req.params.id;
-  db.query("UPDATE router_demo SET likes = likes + 1 WHERE id = ?",id, (err,result)=>{
-      if(err) {
-     console.log(err)   } 
-     console.log(result)
-      });    
-  });
+//   const id = req.params.id;
+//   db.query("UPDATE router_demo SET likes = likes + 1 WHERE id = ?",id, (err,result)=>{
+//       if(err) {
+//      console.log(err)   } 
+//      console.log(result)
+//       });    
+//   });
   
-  // Route to delete a post
+//   // Route to delete a post
   
-  app.delete('/api/delete/:id',(req,res)=>{
-  const id = req.params.id;
+//   app.delete('/api/delete/:id',(req,res)=>{
+//   const id = req.params.id;
   
-  db.query("DELETE FROM router_demo WHERE id= ?", id, (err,result)=>{
-  if(err) {
-  console.log(err)
-          } }) })
+//   db.query("DELETE FROM router_demo WHERE id= ?", id, (err,result)=>{
+//   if(err) {
+//   console.log(err)
+//           } }) })
   
   app.listen(PORT, ()=>{
       console.log(`Server is running on ${PORT}`)
   })
 
-  //////////////////////////////////////           CATEGORY API         //////////////////////////////////////////////
+//   //////////////////////////////////////           CATEGORY API         //////////////////////////////////////////////
   

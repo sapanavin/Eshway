@@ -15,29 +15,37 @@ import DefaultPage, {loader as defaultLoader}  from './components/defaultpage';
 
 import {  createBrowserRouter,  RouterProvider} from "react-router-dom";
 import AddToCart from './components/addtocart';
+import CategoryWiseDisplay from './components/categorywisedisplay';
+import TempPage from './components/temppage';
+
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
+    //loader: rootLoader,
     //action: rootAction,
     children: [
       {
          index:true,
         // path: "contacts/:contactId",
         element: <DefaultPage />,
-        loader: defaultLoader
+        //loader: defaultLoader
       },
       {
-        
-       path: "addtocart/:pId",
+       path: "addtocart/:productId",
        element: <AddToCart />,
-       
-     },
-    ],
-  },
+      },
+      
+      {
+        path: "categories/:id",
+        element: <CategoryWiseDisplay />,
+        
+       }
+    ]
+  }
   
 ]);
 
