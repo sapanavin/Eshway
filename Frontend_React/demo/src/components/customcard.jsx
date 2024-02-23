@@ -6,13 +6,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-//  assets\images\products\books\book-luv2code-1000.png
-// products.map((p)=>{
-//   // console.log(`product from database:==> ${p.image_url}`)
-//      return  <CustomCard product={p}/>
-//  });
+
+
+
 export default function CustomCard({ product_list }) {
-  
+  [cartitem, setCartItem] = React.useState(0);
+
+
   return ( <>
         { product_list.map((product) => (
         <div key={product.id}>

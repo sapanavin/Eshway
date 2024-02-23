@@ -28,7 +28,7 @@ export default function CustomSideBar({  theme }) {
     fetch('http://localhost:3002/api/categories/get')
        .then((response) => response.json())
        .then((data) => {
-          console.log(data);
+         // console.log(data);
           setCategories(data);
        })
        .catch((err) => {

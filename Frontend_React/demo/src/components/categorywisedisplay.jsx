@@ -22,7 +22,7 @@ const params = useParams();
     fetch(`http://localhost:3002/api/categories/${params.id}`)
        .then((response) => response.json())
        .then((data) => {
-          console.log(data);
+          //console.log(data);
           setSingleCategories(data);
        })
        .catch((err) => {

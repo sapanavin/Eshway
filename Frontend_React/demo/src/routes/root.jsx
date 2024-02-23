@@ -9,7 +9,7 @@ export default function Root() {
 return (
       <>
         <CustomHeader />
-                              {/* CustomHeader renders sidebar and otlet in it */}
+             {/* CustomHeader renders sidebar and otlet in it */}
       </>
     );
 }

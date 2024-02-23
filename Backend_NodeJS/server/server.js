@@ -19,6 +19,19 @@ app.get("/api/products/get", (req,res)=>{
       } 
   res.send(result)
   });   });
+
+      //-------------
+      app.get("/api/products/:id", (req,res)=>{
+  
+        const id = req.params.id;
+        console.log(id);
+         db.query("SELECT * FROM product WHERE id = ?", id, 
+         (err,result)=>{
+            if(err) {
+            console.log(err)
+            } 
+            res.send(result)
+            });   });
   
 //-------------------     Categories API   ------------------------------------------------------------------
 app.get("/api/categories/get", (req,res)=>{
