@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,7 +13,7 @@ import  CartContextProvider  from '../context/CartContextProvider';
 
 function AddToCart() {
 
- const [addtocart, SetAddToCart] = useState([]);
+ const { cartItems } = useContext();
   
 
 return(
@@ -22,7 +22,7 @@ return(
    <hr></hr>
    <div>
       <CartContextProvider>
-      { addtocart.map((product) => <p>{ product.id } {product.name}</p>)} 
+      {/* { addtocart.map((product) => <p>{ product.id } {product.name}</p>)}  */}
       </CartContextProvider>
     </div>
   
