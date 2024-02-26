@@ -16,6 +16,7 @@ import DefaultPage, {loader as defaultLoader}  from './components/defaultpage';
 import {  createBrowserRouter,  RouterProvider} from "react-router-dom";
 import AddToCart from './components/addtocart';
 import CategoryWiseDisplay from './components/categorywisedisplay';
+import Details from './components/Details';
 import TempPage from './components/temppage';
 
 
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
       {
         path: "categories/:id",
         element: <CategoryWiseDisplay />,
+        
+       },
+       {
+        path: "details/:id",
+        element: <Details />,
         
        }
     ]

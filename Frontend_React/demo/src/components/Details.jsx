@@ -1,5 +1,7 @@
 import React from 'react'
 
+
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -25,19 +27,18 @@ class MyProduct{
 }
 
 
-function CategoryWiseDisplay() {
+function Details() {
 
-  var inCart ;
+  var inCart ; var valuefind;
+ 
   let arr1 = [];
-  let arr2 = [];
+  let ExtractedPidsFromLocalStorage = [];
 
 
-  //const [products, setProducts] = useState([]);
-  const [singlecategories, setSingleCategories] = useState([]);
-  
-  
+  const [products, setProducts] = useState([]);
+
   const [todos, setTodos] = useState([]);
-	const [todoItem, setTodoItem] = useState(null);
+  const [todoItem, setTodoItem] = useState(null);
   const [completedTasks, setCompletedTasks] = useState('');
 
   const params = useParams();
@@ -45,16 +46,16 @@ function CategoryWiseDisplay() {
 
   useEffect(() => {
    // console.log(`from product useEffect`)
-    fetch(`http://localhost:3002/api/categories/${params.id}`)
+    fetch(`http://localhost:3002/api/products/${params.id}`)
        .then((response) => response.json())
        .then((data) => {
-          //console.log(data);
-          setSingleCategories(data);
+         // console.log(data);
+          setProducts(data);
        })
        .catch((err) => {
           console.log(err.message);
        });
- }, [params]);
+ }, []);
 
 
 useEffect(() => {
@@ -76,7 +77,8 @@ useEffect(() => {
 }, [todos]);
 
 useEffect(()=>{
-  console.log("In Response to todoItem UseEffect  ")
+  console.log("In Response to todoItem UseEffect  ");
+  helperToPrintInCart();
 },[todoItem]);
 
 //--------------------------------       Helper Function           ----------------------------
@@ -97,38 +99,40 @@ const handleSubmit = (e) => {
      setTodos([item, ...todos]);
      setTodoItem({});
    } else {
-    console.log(`inside else`);
+   // console.log(`inside else`);
      setTodoItem({});
    }
+
+  
  };
 
 
-const helperToHandleSubmit = (e) =>{
+ const helperToHandleSubmit = (e) =>{
   
-      var item;
-      for (let i = 0; i < singlecategories.length; i++) {
-     
-      if (singlecategories[i].id === Number(e)){
-        const  item = new MyProduct(singlecategories[i].id, singlecategories[i].name, singlecategories[i].image_url, singlecategories[i].description);
-         //console.log("product found", item);
-        return  item;
-         break;
-    }
-  } }
+    var item;
+    for (let i = 0; i < products.length; i++) {
+   
+    if (products[i].id === Number(e)){
+      const  item = new MyProduct(products[i].id, products[i].name, products[i].image_url, products[i].description);
+       //console.log("product found", item);
+      return  item;
+       break;
+  }
+} }
 
   const helperToExtratPid = ()=> {
- 
+     //console.log("helperToExtratPid am called")
     for (let i = 0; i < todos.length-1; i += 1) {
-          arr2.push(todos[i].id)
+      ExtractedPidsFromLocalStorage.push(todos[i].id)
    }
             
   }
   
   const helperToPrintInCart = (pid) =>{
       helperToExtratPid();
-      for (let i = 0; i < arr2.length-1; i += 1) {
-      if(pid == arr2[i]){
-          console.log(`Found in cart ${ arr2[i]}`)
+      for (let i = 0; i < ExtractedPidsFromLocalStorage.length-1; i += 1) {
+      if(pid == ExtractedPidsFromLocalStorage[i]){
+          console.log(`Found in cart ${ ExtractedPidsFromLocalStorage[i]}`)
           return true;
        }
     }
@@ -136,53 +140,53 @@ const helperToHandleSubmit = (e) =>{
     }
  
   
-  return ( 
-  <>
- <h1>  Your Cart is fulled with   : { todos.length} items </h1>
- <div className="productdisplay">
-  
-  { singlecategories.map((product) => (
+    return ( 
 
-    <div key={product.id}>
-     
-        <Card  sx={{ m:1, width: [100, 200, 400] }} >
-        <CardMedia   component="img" alt= {product.name} height="260"
-          image={`../${product.image_url}`}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {product.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            { product.description}
-          </Typography>
-        </CardContent>
-        <CardActions>
 
-   
-      
-      {inCart = helperToPrintInCart( product.id ) }  
+        <div className="productdisplay">
+           
+
+          
+         { products.map((product) => (
+          
+         <div key={product.id}>
+            <h1> Details Of {product.name}</h1>
+             <Card  sx={{ m:1, width: [200, 400, 500] }} >
+               <CardMedia   component="img" alt= {product.name} height="400"
+                 image={`../${product.image_url}`}
+               />
+               <CardContent>
+                 <Typography gutterBottom variant="h4" component="div">
+                   {product.name}
+                 </Typography>
+                 <Typography variant="body1" color="text.secondary">
+                   { product.description}
+                 </Typography>
+               </CardContent>
+               <CardActions>
+
+               {inCart = helperToPrintInCart( product.id ) }  
     
 
-    { inCart ? <Button sx={{ color: 'Red'}}  size="small" name="subject" type="submit"  >InCart </Button> : 
+               { inCart ? <Button sx={{ color: 'Red'}}  size="small" name="subject" type="submit"  >InCart </Button> : 
                           <Button size="small" name="subject" type="submit" value={product.id} onClick={ handleSubmit } > Add To Cart </Button>  }             
         
         
-        <Link to={`/details/${product.id}`}> <Button size="small">Details</Button></Link>
-        </CardActions>
-      </Card>
-  </div>
-  ))
+       
+               
+               
+               
+               </CardActions>
+             </Card>
+         </div>
+         ))
+         }
+           
+       </div> );  
   }
-  </div>
-
-</> );
-
-  
-  }
 
 
 
-export default CategoryWiseDisplay;
+export default Details;
 
 

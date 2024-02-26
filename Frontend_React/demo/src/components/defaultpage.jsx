@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { useState, useEffect , useContext} from 'react';
+import { blue } from '@mui/material/colors';
+import {  useParams } from 'react-router-dom';
  
 
 class MyProduct{
@@ -25,16 +27,24 @@ class MyProduct{
 
 function DefaultPage() {
 
-  var inCart = false;
+  var inCart ; var valuefind;
+ 
+  let arr1 = [];
+  let ExtractedPidsFromLocalStorage = [];
+
+
   const [products, setProducts] = useState([]);
 
   const [todos, setTodos] = useState([]);
 	const [todoItem, setTodoItem] = useState(null);
   const [completedTasks, setCompletedTasks] = useState('');
 
+  const params = useParams();
+  console.log(`Params   ${params}`)
+
   useEffect(() => {
    // console.log(`from product useEffect`)
-    fetch('http://localhost:3002/api/products/get')
+    fetch('http://localhost:3002/api/products')
        .then((response) => response.json())
        .then((data) => {
           //console.log(data);
@@ -46,99 +56,100 @@ function DefaultPage() {
  }, []);
 
 
- const helperToHandleSubmit = (e) =>{
-  
-  var item;
-
-    for (let i = 0; i < products.length; i++) {
-     
-      if (products[i].id === Number(e)){
-        const  item = new MyProduct(products[i].id, products[i].name, products[i].image_url, products[i].description);
-         console.log("product found", item);
-         
-         return  item;
-         break;
-    }
-  }
-    
- 
- }
-
- 
- const handleSubmit = (e) => {
-
-  
- var item  =  helperToHandleSubmit(e.target.value);
- 
- 
-  if (item) {
-    console.log(`inside if`);
-   // let uniqueId = new Date().getTime().toString(36) + new Date().getUTCMilliseconds();
-    let newTodoItem = {
-      id: item.id,
-      productDetails: item
-      //complete: false,
-    }
-    
-    setTodos([item, ...todos]);
-    setTodoItem({});
-  } else {
-    //setError(true);
-    console.log(`inside else`);
-    setTodoItem({});
-  }
-};
-
 useEffect(() => {
-  //console.log(`useEffect()  []`)
+  
   const todos = JSON.parse(localStorage.getItem('todos'));
-  //console.log(`useEffect()  [] value of typeof todos : ==> ${ typeof(todos)}`)
-  const cartArray = localStorage.getItem('todos');
-  const cartArrayTypewithJSONParse = JSON.parse(cartArray);
-  //console.log(`typeof cartArray : ==> ${ typeof(cartArray )}`)
- // console.log(`typeof cartArrayTypewithJSONParse : ==> ${ typeof(cartArrayTypewithJSONParse )}`)
- 
-  console.log(`cartArray : ==> ${ cartArray }`);
- 
+ //  console.log(`cartArray : ==> ${ cartArray }`);
  
   if (todos) {
     setTodos(todos);
-    //console.log(`ToDOs in Cart ${todos}`)
+    
   }
 }, []);
 
-
 useEffect(() => {
- // console.log(`setting localstorage todos array`);
+  //console.log(`setting localstorage todos array`);
   localStorage.setItem('todos', JSON.stringify(todos));
+  helperToExtratPid()
+
 }, [todos]);
 
 useEffect(()=>{
-  console.log("In Response to todoItem UseEffect  ")
+  console.log("In Response to todoItem UseEffect  ");
+  helperToPrintInCart();
 },[todoItem]);
 
-let arr1 = [];
-for (let i = 0; i < 2; i += 1) {
-    arr1.push(true);
-}
-arr1.push(false)
-console.log(arr1);
+//--------------------------------       Helper Function           ----------------------------
 
-        
+const handleSubmit = (e) => {
+ 
+  var item  =  helperToHandleSubmit(e.target.value);
+       
+   if (item) {
+     console.log(`inside if`);
+    // let uniqueId = new Date().getTime().toString(36) + new Date().getUTCMilliseconds();
+     let newTodoItem = {
+       id: item.id,
+       productDetails: item
+       
+     }
+     
+     setTodos([item, ...todos]);
+     setTodoItem({});
+   } else {
+    console.log(`inside else`);
+     setTodoItem({});
+   }
+
+  
+ };
+
+
+const helperToHandleSubmit = (e) =>{
+  
+      var item;
+      for (let i = 0; i < products.length; i++) {
+     
+      if (products[i].id === Number(e)){
+        const  item = new MyProduct(products[i].id, products[i].name, products[i].image_url, products[i].description);
+         //console.log("product found", item);
+        return  item;
+         break;
+    }
+  } }
+
+  const helperToExtratPid = ()=> {
+     //console.log("helperToExtratPid am called")
+    for (let i = 0; i < todos.length-1; i += 1) {
+      ExtractedPidsFromLocalStorage.push(todos[i].id)
+   }
+            
+  }
+  
+  const helperToPrintInCart = (pid) =>{
+      helperToExtratPid();
+      for (let i = 0; i < ExtractedPidsFromLocalStorage.length-1; i += 1) {
+      if(pid == ExtractedPidsFromLocalStorage[i]){
+          console.log(`Found in cart ${ ExtractedPidsFromLocalStorage[i]}`)
+          return true;
+       }
+    }
+       return false;
+    }
+ 
+  
   return ( 
   <>
-  <h1> Here is Add To Cart length :</h1>
-    
-  { arr1.map((a) => { inCart = (a !== 2).toString() }) }
-  { arr1.map((a) => <h1>   { inCart } </h1> ) }
-  { arr1.map((a) => <h1>   { a.toString() } </h1> ) }
+ <h1>  Your Cart is fulled with   : { todos.length} items </h1>
+
+ 
  
  <div className="productdisplay">
   
   { products.map((product) => (
 
     <div key={product.id}>
-      <h1> { typeof (product.id)}</h1> 
+     
         <Card  sx={{ m:1, width: [100, 200, 400] }} >
         <CardMedia   component="img" alt= {product.name} height="260"
           image={`../${product.image_url}`}
@@ -153,14 +164,15 @@ console.log(arr1);
         </CardContent>
         <CardActions>
 
-        {arr1.map((a) => (a  ? <h1>I am in Cart !</h1> : <h1>I am not In Cart.</h1>))}
-      
-        
 
-     <Button size="small" name="subject" type="submit" value={product.id} onClick={ handleSubmit } >Add To Cart</Button>             
+      {inCart = helperToPrintInCart( product.id ) }  
+
+
+    { inCart ? <Button sx={{ color: 'Red'}}  size="small" >INCART </Button> : 
+                          <Button size="small" name="subject" type="submit" value={product.id} onClick={ handleSubmit } > Add To Cart </Button>  }             
         
         
-        <Button size="small">Details</Button>
+        <Link to={`/details/${product.id}`}> <Button size="small">Details</Button></Link>
         </CardActions>
       </Card>
   </div>

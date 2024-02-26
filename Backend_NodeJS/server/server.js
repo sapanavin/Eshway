@@ -12,7 +12,7 @@ app.use(express.json());
 
 //-------------------     Product API   ------------------------------------------------------------------
 
-app.get("/api/products/get", (req,res)=>{
+app.get("/api/products", (req,res)=>{
   db.query("SELECT * FROM product", (err,result)=>{
       if(err) {
       console.log(err)
@@ -46,7 +46,7 @@ app.get("/api/categories/get", (req,res)=>{
    app.get("/api/categories/:id", (req,res)=>{
   
     const id = req.params.id;
-    console.log(id);
+    //console.log(id);
      db.query("SELECT * FROM product WHERE category_id = ?", id, 
      (err,result)=>{
         if(err) {

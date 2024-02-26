@@ -17,17 +17,18 @@ function AddToCart() {
   
 
 return(
-  <div> 
-   <h1>Shopping Cart</h1>
-   <hr></hr>
-   <div>
-      <CartContextProvider>
-      {/* { addtocart.map((product) => <p>{ product.id } {product.name}</p>)}  */}
-      </CartContextProvider>
-    </div>
+  // <div> 
+  //  <h1>Shopping Cart</h1>
+  //  <hr></hr>
+  //  <div>
+  //     {/* <CartContextProvider>
+  //     {/* { addtocart.map((product) => <p>{ product.id } {product.name}</p>)}  */}
+  //     </CartContextProvider> */}
+  //   </div>
   
   
-  </div>
+  // </div>
+  <h1>Add To Cart</h1>
 )
 
 }
